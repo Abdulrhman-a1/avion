@@ -1,15 +1,23 @@
 /**
- * Paste this into Google Sheets → Extensions → Apps Script
- * Sheet: https://docs.google.com/spreadsheets/d/1UYb1WAN6OwtOiV5Dmg9hQPSc87DsZ4qJKzrA4kylhqs/edit
+ * Paste into Google Sheets → Extensions → Apps Script
  *
- * Deploy: Deploy → New deployment → Web app
- * - Execute as: Me
- * - Who has access: Anyone
+ * 1. Set SPREADSHEET_ID to your sheet ID (from the sheet URL /d/ID/edit).
+ * 2. Deploy → New deployment → Web app
+ *    - Execute as: Me
+ *    - Who has access: Anyone  (required — not "Anyone with Google account")
+ * 3. After any code change: Manage deployments → Edit → New version → Deploy
+ * 4. Copy the /exec URL into Vercel/local env as GOOGLE_SHEETS_URL
  *
- * Copy the Web App URL into .env as VITE_GOOGLE_SHEETS_URL
+ * Test: open the /exec URL in a browser — you should see {"ok":true,...}, not Sign in.
  */
 
-const SPREADSHEET_ID = '1UYb1WAN6OwtOiV5Dmg9hQPSc87DsZ4qJKzrA4kylhqs';
+const SPREADSHEET_ID = '15YtjyiFGUhbv1-EDVBnZIYaNjXuc1Ln-V6AGkn3BW0c';
+
+function doGet() {
+  return ContentService.createTextOutput(
+    JSON.stringify({ ok: true, message: 'Rating endpoint is live' }),
+  ).setMimeType(ContentService.MimeType.JSON);
+}
 
 function doPost(e) {
   try {

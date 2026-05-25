@@ -1,3 +1,17 @@
+# Avion Chat
+
+## Ratings → Google Sheets
+
+Ratings are sent through `/api/submit-rating` (same origin — no browser CORS to Google).
+
+1. Paste `scripts/google-sheets-webapp.js` into your sheet’s Apps Script; set `SPREADSHEET_ID`.
+2. Deploy as **Web app**: Execute as **Me**, Who has access **Anyone** (not “with Google account”).
+3. After code changes: **Manage deployments → New version → Deploy**.
+4. Open the `/exec` URL in a browser — expect `{"ok":true,...}`, not Sign in.
+5. Copy `.env.example` to `.env` locally; on **Vercel** set `GOOGLE_SHEETS_URL` and **redeploy**.
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

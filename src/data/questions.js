@@ -6,6 +6,8 @@ const questions = [
     question: "How many SDGs did AVION contribute to?",
     keywords: ["SDG", "sustainable", "development", "goals", "United Nations", "sustainability", "13"],
     answer: "AVION contributed to 13 United Nations Sustainable Development Goals: SDG 1 No Poverty, SDG 2 Zero Hunger, SDG 3 Good Health and Well-Being, SDG 4 Quality Education, SDG 5 Gender Equality, SDG 8 Decent Work and Economic Growth, SDG 10 Reduced Inequalities, SDG 12 Responsible Consumption and Production, SDG 13 Climate Action, SDG 14 Life Below Water, SDG 15 Life On Land, and SDG 17 Partnerships for the Goals.",
+    image: "/assets/images/q1.png",
+    imageAlt: "AVION SDG contributions",
     related: ["q8", "q9"],
   },
   {
@@ -22,6 +24,8 @@ const questions = [
     question: "What made AVION's execution different from other teams?",
     keywords: ["different", "unique", "special", "approach", "workshops", "sustainability"],
     answer: "AVION focused on transforming engineering into public experiences through workshops, sustainability initiatives, activations, outreach events, and digital engagement instead of limiting the project to competition preparation only.",
+    image: "/assets/images/q3.jpg",
+    imageAlt: "AVION execution approach",
     related: ["q2", "q4"],
   },
   {
@@ -30,6 +34,8 @@ const questions = [
     question: "How did AVION engage the community?",
     keywords: ["community", "engage", "participation", "workshops", "booths", "tournaments"],
     answer: "The team organized workshops, public booths, tournaments, hospital outreach activities, sustainability initiatives, and interactive challenges that encouraged direct participation.",
+    image: "/assets/images/q4-5.JPG",
+    imageAlt: "AVION community engagement",
     related: ["q5", "q6"],
   },
   {
@@ -38,6 +44,8 @@ const questions = [
     question: "What were AVION's biggest execution activities?",
     keywords: ["activities", "events", "biggest", "major", "Dates Festival", "Mini Avioneers", "ANJSUM"],
     answer: "Dates Festival activation, Mini Avioneers workshop, Al Moosa Hospital outreach, Al Fateh match activations, sustainability initiatives, and ANJSUM participation.",
+    image: "/assets/images/q4-5.JPG",
+    imageAlt: "AVION major execution activities",
     related: ["q6", "q11"],
   },
   {
@@ -62,6 +70,8 @@ const questions = [
     question: "What sustainability initiatives did AVION complete?",
     keywords: ["sustainability", "recycling", "cleanup", "planting", "Mashmoom", "clothing", "donation"],
     answer: "Bottle cap recycling, coastal cleanups, planting initiatives, Mashmoom seed distribution, clothing donation drives, and plant reuse systems.",
+    image: "/assets/images/q8.png",
+    imageAlt: "AVION sustainability initiatives",
     related: ["q1", "q9"],
   },
   {
@@ -78,6 +88,8 @@ const questions = [
     question: "What was AVION's role during ANJSUM?",
     keywords: ["ANJSUM", "gender", "equality", "education", "access"],
     answer: "Participation in discussions about gender equality and education access while promoting STEM awareness.",
+    image: "/assets/images/q10.jpg",
+    imageAlt: "AVION at ANJSUM",
     related: ["q1", "q4"],
   },
   {
@@ -94,6 +106,8 @@ const questions = [
     question: "What is AVION's Snapchat filter (AviShades)?",
     keywords: ["Snapchat", "filter", "AviShades", "digital", "AR"],
     answer: "A digital filter based on AviShades that allows people who cannot physically reach AVION to still experience and interact with the concept.",
+    image: "/assets/images/q12-q13.jpg",
+    imageAlt: "AVION AviShades Snapchat filter",
     related: ["q13", "q16"],
   },
   {
@@ -102,6 +116,8 @@ const questions = [
     question: "How many people used AVION's Snapchat filter?",
     keywords: ["Snapchat", "users", "60000", "filter"],
     answer: "Over 60,000+ users.",
+    image: "/assets/images/q12-q13.jpg",
+    imageAlt: "AVION Snapchat filter usage",
     related: ["q12", "q17"],
   },
   {
@@ -118,6 +134,8 @@ const questions = [
     question: "How did AVION adapt activities for different audiences?",
     keywords: ["adapt", "audiences", "quizzes", "games", "challenges", "hands-on"],
     answer: "Through quizzes, games, explanations, challenges, and hands-on experiences.",
+    image: "/assets/images/q15.jpg",
+    imageAlt: "AVION activities adapted for different audiences",
     related: ["q4", "q6"],
   },
   {
@@ -184,6 +202,8 @@ const questions = [
     question: "What is the responsibility of the Head Engineer?",
     keywords: ["Head Engineer", "oversees", "quality", "delegation", "testing"],
     answer: "Oversees engineering, quality control, delegation, and testing.",
+    image: "/assets/images/q23.JPG",
+    imageAlt: "Head Engineer responsibilities",
     related: ["q22", "q24"],
   },
   {
@@ -208,6 +228,8 @@ const questions = [
     question: "Why is teamwork important in STEM Racing?",
     keywords: ["teamwork", "collaboration", "connected", "stages"],
     answer: "Because all engineering stages are connected.",
+    image: "/assets/images/q26.jpg",
+    imageAlt: "Teamwork in STEM Racing",
     related: ["q22", "q30"],
   },
   {
@@ -216,6 +238,8 @@ const questions = [
     question: "Why is research important before designing the car?",
     keywords: ["research", "design", "scientifically", "justified"],
     answer: "It ensures decisions are scientifically justified.",
+    image: "/assets/images/q27.jpg",
+    imageAlt: "Research before car design",
     related: ["q28", "q30"],
   },
   {
@@ -240,6 +264,8 @@ const questions = [
     question: "What is the Engineering Loop?",
     keywords: ["engineering loop", "cycle", "design", "test", "improve", "repeat", "iteration"],
     answer: "A cycle of design, test, improve, and repeat.",
+    image: "/assets/images/q23-30-32.JPG",
+    imageAlt: "The Engineering Loop",
     related: ["q27", "q31"],
   },
   {
@@ -256,6 +282,8 @@ const questions = [
     question: "What manufacturing limitations must engineers consider?",
     keywords: ["manufacturing", "limitations", "tolerances", "tools", "surface", "machining"],
     answer: "Tolerances, tools, surface finish, and machining constraints.",
+    image: "/assets/images/q23-30-32.JPG",
+    imageAlt: "Manufacturing limitations in engineering",
     related: ["q31", "q25"],
   },
   {
@@ -264,6 +292,8 @@ const questions = [
     question: "What is Drag Force?",
     keywords: ["drag", "force", "resistance", "air", "aerodynamics"],
     answer: "Force resisting motion through air.",
+    image: "/assets/images/q33.JPG",
+    imageAlt: "Drag force aerodynamics",
     related: ["q34", "q35"],
   },
   {
@@ -312,6 +342,8 @@ const questions = [
     question: "What is Flow Separation?",
     keywords: ["flow", "separation", "detaches", "turbulence"],
     answer: "When airflow detaches causing turbulence.",
+    image: "/assets/images/q39.jpg",
+    imageAlt: "Flow separation in aerodynamics",
     related: ["q38", "q40"],
   },
   {
