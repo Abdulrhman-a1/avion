@@ -1,5 +1,9 @@
+import { lazy, Suspense } from 'react';
+import { useDeferredMount } from '../hooks/useDeferredMount';
 import OrbFallback from './OrbFallback';
 import CardArt from './CardArt';
+
+const CarModel = lazy(() => import('./CarModel'));
 
 const categories = [
   {
@@ -28,7 +32,9 @@ const categories = [
   },
 ];
 
-export default function WelcomeScreen({ onSelectCategory }) {
+export default function WelcomeScreen({ onSelectCategory, isResponding }) {
+  const showModel = useDeferredMount({ idleTimeoutMs: 2000 });
+
   return (
     <div className="welcome-layout">
       <div className="welcome-split">
@@ -42,7 +48,13 @@ export default function WelcomeScreen({ onSelectCategory }) {
 
         <div className="orb-wrap">
           <div className="orb">
-            <OrbFallback />
+            {showModel ? (
+              <Suspense fallback={<OrbFallback />}>
+                <CarModel isTyping={isResponding} presentation="welcome" />
+              </Suspense>
+            ) : (
+              <OrbFallback />
+            )}
           </div>
         </div>
       </div>

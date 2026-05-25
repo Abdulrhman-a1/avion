@@ -2,7 +2,6 @@ import { Suspense, useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Environment, Float } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
-import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import * as THREE from 'three';
 import { useSpeechReveal } from '../contexts/SpeechRevealContext';
 import ModelErrorBoundary from './ModelErrorBoundary';
@@ -18,13 +17,16 @@ const CAMERA_CHAT_FOV = 43;
 const HEAD_TURN_Y = 0.45;
 const HEAD_TURN_X = 0.28;
 const MOUSE_LERP = 0.32;
+const MODEL_URL = '/assets/single_color (4).stl';
+
+useLoader.preload(STLLoader, MODEL_URL);
 
 function CarMesh({ speechActive, presentation }) {
   const meshRef = useRef(null);
   const followRef = useRef(null);
   const nodRef = useRef(null);
   const mouseTarget = useRef({ x: 0, y: 0 });
-  const geometry = useLoader(STLLoader, '/assets/single_color (4).stl');
+  const geometry = useLoader(STLLoader, MODEL_URL);
 
   const isChat = presentation === 'chat';
   const turnY = isChat ? HEAD_TURN_Y * 0.48 : HEAD_TURN_Y;
@@ -45,15 +47,14 @@ function CarMesh({ speechActive, presentation }) {
   const processedGeometry = useMemo(() => {
     const geo = geometry.clone();
     geo.center();
-    const merged = mergeVertices(geo);
-    merged.computeVertexNormals();
-    const box = new THREE.Box3().setFromBufferAttribute(merged.attributes.position);
+    geo.computeVertexNormals();
+    const box = new THREE.Box3().setFromBufferAttribute(geo.attributes.position);
     const size = new THREE.Vector3();
     box.getSize(size);
     const maxDim = Math.max(size.x, size.y, size.z);
-    merged.scale(2.75 / maxDim, 2.75 / maxDim, 2.75 / maxDim);
-    merged.computeVertexNormals();
-    return merged;
+    geo.scale(2.75 / maxDim, 2.75 / maxDim, 2.75 / maxDim);
+    geo.computeVertexNormals();
+    return geo;
   }, [geometry]);
 
   useFrame((state) => {
@@ -154,6 +155,9 @@ function CarModelCanvas({ isTyping = false, presentation = 'welcome' }) {
         <pointLight position={[3, 0, 2]} intensity={0.35} color="#3BFAD2" />
         <Suspense fallback={<Loader />}>
           <CarMesh speechActive={speechActive} presentation={presentation} />
+        </Suspense>
+        {/* Env map loads separately so the car is not stuck on the loader */}
+        <Suspense fallback={null}>
           <Environment preset="city" />
         </Suspense>
       </Canvas>
