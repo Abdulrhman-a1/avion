@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import VoiceInput from './VoiceInput';
 
-export default function InputBar({ onSend, onEndChat, showEndChat, disabled }) {
+export default function InputBar({
+  onSend,
+  onEndChat,
+  onBackToHome,
+  showEndChat,
+  showBackToHome,
+  disabled,
+}) {
   const [text, setText] = useState('');
 
   const handleSend = () => {
@@ -21,16 +28,27 @@ export default function InputBar({ onSend, onEndChat, showEndChat, disabled }) {
           </svg>
           <span>Ask <span className="composer-badge-name">Nakhil</span></span>
         </div>
-        {showEndChat && (
-          <button
-            type="button"
-            className="composer-end-chat"
-            onClick={onEndChat}
-            disabled={disabled}
-          >
-            End Chat
-          </button>
-        )}
+        <div className="composer-header-actions">
+          {showBackToHome && (
+            <button
+              type="button"
+              className="home-back-btn home-back-btn--composer"
+              onClick={onBackToHome}
+            >
+              Back to Home
+            </button>
+          )}
+          {showEndChat && (
+            <button
+              type="button"
+              className="composer-end-chat"
+              onClick={onEndChat}
+              disabled={disabled}
+            >
+              End Chat
+            </button>
+          )}
+        </div>
       </div>
 
       <input

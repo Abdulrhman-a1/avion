@@ -42,7 +42,7 @@ export default function WelcomeScreen({ onSelectCategory, isResponding }) {
 
         <div className="orb-wrap">
           <div className="orb">
-            <CarModel isResponding={isResponding} />
+            <CarModel isTyping={isResponding} />
           </div>
         </div>
       </div>

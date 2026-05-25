@@ -154,13 +154,27 @@ function App() {
     });
   }, [chatEnded, simulateTyping, addBotMessage]);
 
+  const handleGoHome = useCallback(() => {
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+    setChatMode(false);
+    setMessages([]);
+    setIsTyping(false);
+    setShowEvaluation(false);
+    setChatEnded(false);
+    setMessageCount(0);
+    setHistoryExpanded(false);
+    latestBubbleIdRef.current = null;
+  }, []);
+
   const handleEvaluationSubmitted = useCallback(() => {
     setShowEvaluation(false);
-  }, []);
+    handleGoHome();
+  }, [handleGoHome]);
 
   const handleEvaluationClose = useCallback(() => {
     setShowEvaluation(false);
-  }, []);
+    if (chatEnded) handleGoHome();
+  }, [chatEnded, handleGoHome]);
 
   const toggleHistory = useCallback(() => {
     setHistoryExpanded((v) => !v);
@@ -170,7 +184,7 @@ function App() {
 
   return (
     <div className="app-shell">
-      <Header />
+      <Header showBackToHome={chatMode} onBackToHome={handleGoHome} />
 
       <main className={`app-main ${chatMode ? 'chat-mode' : ''}`}>
         {!chatMode && (
@@ -212,7 +226,9 @@ function App() {
         <InputBar
           onSend={handleSend}
           onEndChat={finishChat}
+          onBackToHome={handleGoHome}
           showEndChat={chatMode && !chatEnded && !showEvaluation}
+          showBackToHome={chatMode && (chatEnded || showEvaluation)}
           disabled={isTyping || showEvaluation || chatEnded}
         />
       </main>
@@ -223,6 +239,7 @@ function App() {
             messageCount={messageCount}
             onSubmitted={handleEvaluationSubmitted}
             onClose={handleEvaluationClose}
+            onGoHome={handleGoHome}
           />
         )}
       </AnimatePresence>

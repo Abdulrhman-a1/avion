@@ -4,7 +4,7 @@ import { submitRating } from '../utils/submitRating';
 
 const RATING_LABELS = ['Poor', 'Fair', 'Good', 'Great', 'Excellent'];
 
-export default function Evaluation({ messageCount, onSubmitted, onClose }) {
+export default function Evaluation({ messageCount, onSubmitted, onClose, onGoHome }) {
   const [rating, setRating] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
   const [feedback, setFeedback] = useState('');
@@ -139,6 +139,25 @@ export default function Evaluation({ messageCount, onSubmitted, onClose }) {
           {status === 'success' && 'Thank you!'}
           {status === 'idle' && 'Submit rating'}
         </button>
+
+        {status === 'success' ? (
+          <button
+            type="button"
+            className="home-back-btn home-back-btn--evaluation"
+            onClick={onGoHome}
+          >
+            Back to Home
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="evaluation-skip-home"
+            onClick={onGoHome}
+            disabled={!canClose}
+          >
+            Back to Home without rating
+          </button>
+        )}
       </motion.div>
     </motion.div>
   );

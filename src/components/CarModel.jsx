@@ -132,15 +132,26 @@ function Loader() {
   );
 }
 
-export default function CarModel({ isTyping = false, presentation = 'welcome' }) {
+function CarModelCanvas({ isTyping = false, presentation = 'welcome' }) {
   const { speechReveal } = useSpeechReveal();
   const speechActive = isTyping || speechReveal;
+  const [loadTimedOut, setLoadTimedOut] = useState(false);
 
   const isChat = presentation === 'chat';
 
   const cameraProps = isChat
     ? { position: CAMERA_CHAT_POSITION, fov: CAMERA_CHAT_FOV }
     : { position: CAMERA_POSITION, fov: 36 };
+
+  useEffect(() => {
+    setLoadTimedOut(false);
+    const timer = window.setTimeout(() => setLoadTimedOut(true), MODEL_LOAD_TIMEOUT_MS);
+    return () => window.clearTimeout(timer);
+  }, [presentation]);
+
+  if (loadTimedOut) {
+    return <OrbFallback />;
+  }
 
   return (
     <div className="orb-canvas">
@@ -160,5 +171,13 @@ export default function CarModel({ isTyping = false, presentation = 'welcome' })
         </Suspense>
       </Canvas>
     </div>
+  );
+}
+
+export default function CarModel(props) {
+  return (
+    <ModelErrorBoundary>
+      <CarModelCanvas {...props} />
+    </ModelErrorBoundary>
   );
 }
