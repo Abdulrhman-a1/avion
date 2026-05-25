@@ -1,4 +1,4 @@
-import { Suspense, useRef, useMemo, useEffect, useState } from 'react';
+import { Suspense, useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Environment, Float } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
@@ -7,8 +7,6 @@ import * as THREE from 'three';
 import { useSpeechReveal } from '../contexts/SpeechRevealContext';
 import ModelErrorBoundary from './ModelErrorBoundary';
 import OrbFallback from './OrbFallback';
-
-const MODEL_LOAD_TIMEOUT_MS = 12000;
 
 // عدّل هنا: [ميل فوق/تحت, دوران يمين/يسار, انقلاب]
 const MODEL_ROTATION = [1.5, 3.14, 3.14];
@@ -135,23 +133,12 @@ function Loader() {
 function CarModelCanvas({ isTyping = false, presentation = 'welcome' }) {
   const { speechReveal } = useSpeechReveal();
   const speechActive = isTyping || speechReveal;
-  const [loadTimedOut, setLoadTimedOut] = useState(false);
 
   const isChat = presentation === 'chat';
 
   const cameraProps = isChat
     ? { position: CAMERA_CHAT_POSITION, fov: CAMERA_CHAT_FOV }
     : { position: CAMERA_POSITION, fov: 36 };
-
-  useEffect(() => {
-    setLoadTimedOut(false);
-    const timer = window.setTimeout(() => setLoadTimedOut(true), MODEL_LOAD_TIMEOUT_MS);
-    return () => window.clearTimeout(timer);
-  }, [presentation]);
-
-  if (loadTimedOut) {
-    return <OrbFallback />;
-  }
 
   return (
     <div className="orb-canvas">

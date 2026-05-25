@@ -60,6 +60,8 @@ export default function ChatMessage({
   }, [visibleText, shouldAnimate, onStreamTick]);
 
   const showTypingCaret = shouldAnimate && revealedLen < graphemes.length;
+  const showImage =
+    Boolean(message.image) && (!shouldAnimate || revealedLen >= graphemes.length);
 
   if (isTyping) {
     const typingClass = isSpeech
@@ -99,18 +101,21 @@ export default function ChatMessage({
         {message.matchedQuestion && (
           <p className="text-xs text-muted italic mb-3 leading-relaxed">{message.matchedQuestion}</p>
         )}
-        {message.image && (
-          <img
-            src={encodeURI(message.image)}
-            alt={message.imageAlt || 'Nakhil'}
-            className="msg-image"
-            loading="lazy"
-          />
-        )}
         <p className="msg-typewriter-text whitespace-pre-wrap">
           {visibleText}
           {showTypingCaret && <span className="msg-typewriter-caret" aria-hidden />}
         </p>
+        {showImage && (
+          <div className="msg-image-frame">
+            <img
+              src={encodeURI(message.image)}
+              alt={message.imageAlt || 'Nakhil'}
+              className="msg-image"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
