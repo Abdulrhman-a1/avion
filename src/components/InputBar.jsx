@@ -16,12 +16,11 @@ export default function InputBar({ onSend, onEndChat, showEndChat, disabled }) {
       <div className="composer-header">
         <div className="composer-badge">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2z" fill="#3BFAD2"/>
+            <path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2z" fill="#6742E2"/>
             <path d="M19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14z" fill="#3BFAD2" opacity="0.8"/>
           </svg>
-          <span>Ask AVION</span>
+          <span>Ask <span className="composer-badge-name">Nakhil</span></span>
         </div>
-        <span className="composer-hint">Type or tap voice</span>
         {showEndChat && (
           <button
             type="button"

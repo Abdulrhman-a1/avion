@@ -1,13 +1,16 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import WelcomeScreen from './components/WelcomeScreen';
 import ChatArea from './components/ChatArea';
+import SpeechBubble from './components/SpeechBubble';
 import InputBar from './components/InputBar';
 import Evaluation from './components/Evaluation';
+import CarModel from './components/CarModel';
 import { findAnswer, getAnswerById, getQuestionsByCategory } from './utils/fuzzyMatch';
 import { isEndChatIntent } from './utils/endChat';
 import { getGuardedReply } from './utils/messageGuard';
+import { splitMessages } from './utils/splitMessages';
 
 let msgId = 0;
 const nextId = () => `msg-${++msgId}`;
@@ -22,7 +25,21 @@ function App() {
   const [showEvaluation, setShowEvaluation] = useState(false);
   const [chatEnded, setChatEnded] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
+  const [historyExpanded, setHistoryExpanded] = useState(false);
   const typingTimeoutRef = useRef(null);
+  const latestBubbleIdRef = useRef(null);
+
+  const { latestBotMessage, historyMessages } = useMemo(
+    () => splitMessages(messages),
+    [messages],
+  );
+
+  useEffect(() => {
+    const bubbleId = latestBotMessage?.id;
+    if (!bubbleId || bubbleId === latestBubbleIdRef.current) return;
+    latestBubbleIdRef.current = bubbleId;
+    setHistoryExpanded(false);
+  }, [latestBotMessage?.id]);
 
   const addBotMessage = useCallback((text, extra = {}) => {
     setMessages((prev) => [
@@ -145,6 +162,12 @@ function App() {
     setShowEvaluation(false);
   }, []);
 
+  const toggleHistory = useCallback(() => {
+    setHistoryExpanded((v) => !v);
+  }, []);
+
+  const animateSpeechTypewriter = latestBotMessage?.type === 'bot';
+
   return (
     <div className="app-shell">
       <Header />
@@ -158,11 +181,32 @@ function App() {
         )}
 
         {chatMode && (
-          <ChatArea
-            messages={messages}
-            isTyping={isTyping}
-            onSelectSuggestion={handleSelectSuggestion}
-          />
+          <>
+            <section className="speech-section">
+              <div className="speech-orb-wrap">
+                <div className="orb speech-orb">
+                  <CarModel isTyping={isTyping} presentation="chat" />
+                </div>
+                <span className={`speech-orb-status ${isTyping ? 'speech-orb-typing' : ''}`}>
+                  {isTyping ? 'Thinking…' : 'Nakhil'}
+                </span>
+              </div>
+
+              <SpeechBubble
+                message={latestBotMessage}
+                isTyping={isTyping && latestBotMessage?.type === 'typing'}
+                animateTypewriter={animateSpeechTypewriter}
+                onSelectSuggestion={handleSelectSuggestion}
+              />
+            </section>
+
+            <ChatArea
+              messages={historyMessages}
+              collapsed={!historyExpanded}
+              onToggleCollapse={toggleHistory}
+              onSelectSuggestion={handleSelectSuggestion}
+            />
+          </>
         )}
 
         <InputBar

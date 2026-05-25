@@ -34,9 +34,9 @@ export default function WelcomeScreen({ onSelectCategory, isResponding }) {
       <div className="welcome-split">
         <section className="hero">
           <h1 className="hero-title">
-            <span className="hero-line">Hey! <span className="accent">AVION</span></span>
-            <span className="hero-line">What can I</span>
-            <span className="hero-line">help with?</span>
+            <span className="hero-line">How can</span>
+            <span className="hero-line"><span className="accent">Nakhil</span></span>
+            <span className="hero-line">help you?</span>
           </h1>
         </section>
 

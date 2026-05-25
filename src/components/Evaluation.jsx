@@ -87,7 +87,7 @@ export default function Evaluation({ messageCount, onSubmitted, onClose }) {
             Rate your experience
           </h3>
           <p className="evaluation-subtitle">
-            Your rating helps us improve AVION.
+            Your rating helps us improve Nakhil.
           </p>
         </div>
 

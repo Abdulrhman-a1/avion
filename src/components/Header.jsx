@@ -1,36 +1,21 @@
 export default function Header() {
   return (
     <header className="site-header">
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          fontFamily: "'Anton', sans-serif",
-          letterSpacing: '2px',
-          color: '#3BFAD2',
-          textShadow: '0 0 18px rgba(59, 250, 210, 0.45)',
-          fontSize: '22px',
-        }}
-      >
+      <div className="site-brand">
         <img
           src="/assets/Circl-Logo.png"
           alt="AVION"
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: '50%',
-            objectFit: 'cover',
-            flexShrink: 0,
-          }}
+          width={42}
+          height={42}
+          className="site-brand-logo"
         />
-        AVION
+        <span className="site-brand-title">AVION</span>
       </div>
 
       <img
         src="/assets/Stemracing logo.png"
         alt="STEM Racing Saudi Arabia"
-        style={{ height: 32, opacity: 0.9 }}
+        className="site-header-partner"
       />
     </header>
   );
