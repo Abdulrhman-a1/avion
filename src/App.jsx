@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
+import { useState, useCallback, useRef, useMemo, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import WelcomeScreen from './components/WelcomeScreen';
@@ -6,11 +6,13 @@ import ChatArea from './components/ChatArea';
 import SpeechBubble from './components/SpeechBubble';
 import InputBar from './components/InputBar';
 import Evaluation from './components/Evaluation';
-import CarModel from './components/CarModel';
+import OrbFallback from './components/OrbFallback';
 import { findAnswer, getAnswerById, getQuestionsByCategory } from './utils/fuzzyMatch';
 import { isEndChatIntent } from './utils/endChat';
 import { getGuardedReply } from './utils/messageGuard';
 import { splitMessages } from './utils/splitMessages';
+
+const CarModel = lazy(() => import('./components/CarModel'));
 
 let msgId = 0;
 const nextId = () => `msg-${++msgId}`;
@@ -180,6 +182,10 @@ function App() {
     setHistoryExpanded((v) => !v);
   }, []);
 
+  const preloadCarModel = useCallback(() => {
+    if (!chatMode) void import('./components/CarModel');
+  }, [chatMode]);
+
   const animateSpeechTypewriter = latestBotMessage?.type === 'bot';
 
   return (
@@ -188,10 +194,7 @@ function App() {
 
       <main className={`app-main ${chatMode ? 'chat-mode' : ''}`}>
         {!chatMode && (
-          <WelcomeScreen
-            onSelectCategory={handleSelectCategory}
-            isResponding={isTyping}
-          />
+          <WelcomeScreen onSelectCategory={handleSelectCategory} />
         )}
 
         {chatMode && (
@@ -199,7 +202,9 @@ function App() {
             <section className="speech-section">
               <div className="speech-orb-wrap">
                 <div className="orb speech-orb">
-                  <CarModel isTyping={isTyping} presentation="chat" />
+                  <Suspense fallback={<OrbFallback />}>
+                    <CarModel isTyping={isTyping} presentation="chat" />
+                  </Suspense>
                 </div>
                 <span className={`speech-orb-status ${isTyping ? 'speech-orb-typing' : ''}`}>
                   {isTyping ? 'Thinking…' : 'Nakhil'}
@@ -227,9 +232,10 @@ function App() {
           onSend={handleSend}
           onEndChat={finishChat}
           onBackToHome={handleGoHome}
+          onComposerFocus={preloadCarModel}
           showEndChat={chatMode && !chatEnded && !showEvaluation}
           showBackToHome={chatMode && (chatEnded || showEvaluation)}
-          disabled={isTyping || showEvaluation || chatEnded}
+          disabled={(chatMode && isTyping) || showEvaluation || chatEnded}
         />
       </main>
 

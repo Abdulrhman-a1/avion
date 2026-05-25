@@ -1,4 +1,4 @@
-import CarModel from './CarModel';
+import OrbFallback from './OrbFallback';
 import CardArt from './CardArt';
 
 const categories = [
@@ -28,7 +28,7 @@ const categories = [
   },
 ];
 
-export default function WelcomeScreen({ onSelectCategory, isResponding }) {
+export default function WelcomeScreen({ onSelectCategory }) {
   return (
     <div className="welcome-layout">
       <div className="welcome-split">
@@ -42,7 +42,7 @@ export default function WelcomeScreen({ onSelectCategory, isResponding }) {
 
         <div className="orb-wrap">
           <div className="orb">
-            <CarModel isTyping={isResponding} />
+            <OrbFallback />
           </div>
         </div>
       </div>

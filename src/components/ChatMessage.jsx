@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSpeechReveal } from '../contexts/SpeechRevealContext';
+import ImageLightbox from './ImageLightbox';
 
 const CHAR_MS = 22;
 
@@ -62,6 +63,7 @@ export default function ChatMessage({
   const showTypingCaret = shouldAnimate && revealedLen < graphemes.length;
   const showImage =
     Boolean(message.image) && (!shouldAnimate || revealedLen >= graphemes.length);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   if (isTyping) {
     const typingClass = isSpeech
@@ -106,15 +108,29 @@ export default function ChatMessage({
           {showTypingCaret && <span className="msg-typewriter-caret" aria-hidden />}
         </p>
         {showImage && (
-          <div className="msg-image-frame">
-            <img
-              src={encodeURI(message.image)}
-              alt={message.imageAlt || 'Nakhil'}
-              className="msg-image"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
+          <>
+            <button
+              type="button"
+              className="msg-image-frame msg-image-trigger"
+              onClick={() => setLightboxOpen(true)}
+              aria-label="View larger image"
+            >
+              <img
+                src={encodeURI(message.image)}
+                alt={message.imageAlt || 'Nakhil'}
+                className="msg-image"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+            {lightboxOpen && (
+              <ImageLightbox
+                src={message.image}
+                alt={message.imageAlt}
+                onClose={() => setLightboxOpen(false)}
+              />
+            )}
+          </>
         )}
       </div>
     </div>
