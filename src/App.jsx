@@ -180,10 +180,6 @@ function App() {
     setHistoryExpanded((v) => !v);
   }, []);
 
-  const preloadCarModel = useCallback(() => {
-    if (!chatMode) void import('./components/CarModel');
-  }, [chatMode]);
-
   const animateSpeechTypewriter = latestBotMessage?.type === 'bot';
 
   return (
@@ -231,7 +227,6 @@ function App() {
           onSend={handleSend}
           onEndChat={finishChat}
           onBackToHome={handleGoHome}
-          onComposerFocus={preloadCarModel}
           showEndChat={chatMode && !chatEnded && !showEvaluation}
           showBackToHome={chatMode && (chatEnded || showEvaluation)}
           disabled={(chatMode && isTyping) || showEvaluation || chatEnded}

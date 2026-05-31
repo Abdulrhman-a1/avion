@@ -5,7 +5,6 @@ export default function InputBar({
   onSend,
   onEndChat,
   onBackToHome,
-  onComposerFocus,
   showEndChat,
   showBackToHome,
   disabled,
@@ -56,7 +55,6 @@ export default function InputBar({
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        onFocus={onComposerFocus}
         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
         placeholder="Ask me anything......."
         disabled={disabled}

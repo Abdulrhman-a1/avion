@@ -1,13 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { SpeechRevealProvider } from './contexts/SpeechRevealContext'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import './index.css';
+import AppRoutes from './Routes.jsx';
+import { SpeechRevealProvider } from './contexts/SpeechRevealContext';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <SpeechRevealProvider>
-      <App />
-    </SpeechRevealProvider>
+    <BrowserRouter>
+      <SpeechRevealProvider>
+        <AppRoutes />
+      </SpeechRevealProvider>
+    </BrowserRouter>
   </StrictMode>,
-)
+);
